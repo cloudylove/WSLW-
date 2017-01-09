@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
-    <title>訂單顯示-華新麗華資料收集平台</title>
+    <title>查詢操作員-華新麗華資料收集平台</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
@@ -70,97 +70,49 @@
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
-	<!--Table-->
-	<?php 
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "sa06";
-                $conn = new mysqli ( $servername, $username, $password, $dbname );
-                mysqli_set_charset ( $conn, "utf8" );
-                
-                $sql = "SELECT * FROM `orderlist` ORDER BY `orderlist`.`orderID` DESC";
-                $sql = "SELECT * FROM `orderlist` ORDER BY `orderlist`.`orderID` DESC";
-	            $result = $conn->query ( $sql );
-				
-                if ($result->num_rows > 0) {
-					if(isset($_SESSION['username'])){
-						while ( $row = $result->fetch_assoc () ) {
-							?>
-							<table class="table table-striped table-bordered">
-							<tr>
-								<td>流水號</td>
-								<td><?php echo $row["orderID"]?></td>
-							</tr>
-							<tr>
-								<td>訂貨日期</td>
-								<td><?php echo $row["orderDate"]?></td>
-							</tr>
-							<tr>
-								<td>出貨日期</td>
-								<td><?php echo $row["shipoutdate"]?></td>
-							</tr>
-							<tr>
-								<td>母材編號</td>
-								<td><?php echo $row["parentmetalid"]?></td>
-							</tr>
-							<tr>
-								<td>製造流程</td>
-								<td><?php echo $row["manufacflow"]?></td>
-							</tr>
-							<tr>
-								<td>數量</td>
-								<td><?php echo $row["parentmetalqty"]?></td>
-							</tr>
-							<tr>
-								<td>重量</td>
-								<td><?php echo $row["parentmetalwgt"]?></td>
-							</tr>
-							</table><?php
-						}
-					}
-					else {
-						while ( $row = $result->fetch_assoc () ) {
-							?>
-							<table class="table table-striped table-bordered">
-							<tr>
-								<td>流水號</td>
-								<td><?php echo $row["orderID"]?></td>
-							</tr>
-							<tr>
-								<td>訂貨日期</td>
-								<td><?php echo $row["orderDate"]?></td>
-							</tr>
-							<tr>
-								<td>出貨日期</td>
-								<td><?php echo $row["shipoutDate"]?></td>
-							</tr>
-							<tr>
-								<td>母材編號</td>
-								<td><?php echo $row["parentmetalID"]?></td>
-							</tr>
-							<tr>
-								<td>製造流程</td>
-								<td><?php echo $row["manufacFlow"]?></td>
-							</tr>
-							<tr>
-								<td>數量</td>
-								<td><?php echo $row["parentmetalqty"]?></td>
-							</tr>
-							<tr>
-								<td>重量</td>
-								<td><?php echo $row["parentmetalwgt"]?></td>
-							</tr>
-							</table><?php
-						}
-					}
-                } else {
-                    echo "0 results";
-                }
-                $conn->close ();
-            ?>
-	<button type="button" onclick="location.href='orderAddF.html'" class="btn btn-primary">返回</button>
-	<br><br><br>
+	<!--Form-->
+	<form class="form-horizontal" role="search">
+
+		
+		<div class="form-group">
+			<label for="parentmetalid" class="col-sm-4 control-label">查詢方式</label>
+			<div class="col-sm-4">
+			<select class="form-control">
+				<option>請選擇</option>
+				<option value="machineid">機台編號</option>
+				<option value="power">電源開關</option>
+				<option value="machinestatus">機台狀態</option>
+				<option value="machineparameter">機台參數</option>
+			</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="parentmetalid" class="col-sm-4 control-label">輸入</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" id="machinesearch" placeholder="請輸入關鍵字">
+			</div>
+		</div>
+		<br>
+		<button type="submit" class="btn btn-default">查詢</button>
+		<br>
+		<br>
+		<br>
+		<!--Table-->
+		<table class="table table-striped table-bordered">
+			<tr>
+				<td>機台編號</td>
+				<td>電源開關</td>
+				<td>機台狀態</td>
+				<td>機台參數</td>				
+			</tr>
+			<tr>
+				<td>123</td>
+				<td></td>
+				<td></td>
+				<td></td>			
+			</tr>
+		</table>
+	</form>
 	</div>
   </body>
 </html>

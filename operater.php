@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
-    <title>訂單顯示-華新麗華資料收集平台</title>
+    <title>輸入操作員-華新麗華資料收集平台</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
@@ -70,97 +70,37 @@
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
-	<!--Table-->
-	<?php 
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "sa06";
-                $conn = new mysqli ( $servername, $username, $password, $dbname );
-                mysqli_set_charset ( $conn, "utf8" );
-                
-                $sql = "SELECT * FROM `orderlist` ORDER BY `orderlist`.`orderID` DESC";
-                $sql = "SELECT * FROM `orderlist` ORDER BY `orderlist`.`orderID` DESC";
-	            $result = $conn->query ( $sql );
-				
-                if ($result->num_rows > 0) {
-					if(isset($_SESSION['username'])){
-						while ( $row = $result->fetch_assoc () ) {
-							?>
-							<table class="table table-striped table-bordered">
-							<tr>
-								<td>流水號</td>
-								<td><?php echo $row["orderID"]?></td>
-							</tr>
-							<tr>
-								<td>訂貨日期</td>
-								<td><?php echo $row["orderDate"]?></td>
-							</tr>
-							<tr>
-								<td>出貨日期</td>
-								<td><?php echo $row["shipoutdate"]?></td>
-							</tr>
-							<tr>
-								<td>母材編號</td>
-								<td><?php echo $row["parentmetalid"]?></td>
-							</tr>
-							<tr>
-								<td>製造流程</td>
-								<td><?php echo $row["manufacflow"]?></td>
-							</tr>
-							<tr>
-								<td>數量</td>
-								<td><?php echo $row["parentmetalqty"]?></td>
-							</tr>
-							<tr>
-								<td>重量</td>
-								<td><?php echo $row["parentmetalwgt"]?></td>
-							</tr>
-							</table><?php
-						}
-					}
-					else {
-						while ( $row = $result->fetch_assoc () ) {
-							?>
-							<table class="table table-striped table-bordered">
-							<tr>
-								<td>流水號</td>
-								<td><?php echo $row["orderID"]?></td>
-							</tr>
-							<tr>
-								<td>訂貨日期</td>
-								<td><?php echo $row["orderDate"]?></td>
-							</tr>
-							<tr>
-								<td>出貨日期</td>
-								<td><?php echo $row["shipoutDate"]?></td>
-							</tr>
-							<tr>
-								<td>母材編號</td>
-								<td><?php echo $row["parentmetalID"]?></td>
-							</tr>
-							<tr>
-								<td>製造流程</td>
-								<td><?php echo $row["manufacFlow"]?></td>
-							</tr>
-							<tr>
-								<td>數量</td>
-								<td><?php echo $row["parentmetalqty"]?></td>
-							</tr>
-							<tr>
-								<td>重量</td>
-								<td><?php echo $row["parentmetalwgt"]?></td>
-							</tr>
-							</table><?php
-						}
-					}
-                } else {
-                    echo "0 results";
-                }
-                $conn->close ();
-            ?>
-	<button type="button" onclick="location.href='orderAddF.html'" class="btn btn-primary">返回</button>
-	<br><br><br>
+	<!--Form-->
+	<form class="form-horizontal" role="form">
+		<!--SQL給流水號>
+		<div class="form-group">
+			<label for="orderid" class="col-sm-3 control-label">訂單編號</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" id="orderid" placeholder="SQL給流水號">
+			</div>
+		</div>-->
+		
+		<div class="form-group">
+			<label for="parentmetalid" class="col-sm-3 control-label">操作員姓名</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" id="operatername" placeholder="輸入操作員姓名">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="parentmetalid" class="col-sm-3 control-label">操作員班表</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" id="operatertime" placeholder="輸入操作員班表">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="parentmetalid" class="col-md-3 control-label">工作位置</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="operaterposition" placeholder="輸入工作位置">
+			</div>
+		</div>
+		
+		<button type="submit" class="btn btn-default">確定</button>
+	</form>
 	</div>
   </body>
 </html>

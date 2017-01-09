@@ -5,7 +5,7 @@ $password = "kevinhsu";
 
 if ($_POST['managerid'] == $username && $_POST['managerpwd'] == $password ) {
 	$_SESSION ['username'] = $username;
-	echo '<meta http-equiv=REFRESH CONTENT=1;url=index2.html>';
+	echo '<meta http-equiv=REFRESH CONTENT=1;url=index2.php>';
 } else {
 	echo "Login Failed.";
 	echo '<meta http-equiv=REFRESH CONTENT=1;url=index.html>';
