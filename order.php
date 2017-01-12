@@ -47,7 +47,7 @@
 			操作員<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="operater.php">輸入操作員資訊</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="operaterF.php">輸入操作員資訊</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="searchoperater.php">查詢操作員資訊</a></li>
 			</ul>
 		</li>
@@ -80,7 +80,6 @@
                 mysqli_set_charset ( $conn, "utf8" );
                 
                 $sql = "SELECT * FROM `orderlist` ORDER BY `orderlist`.`orderID` DESC";
-                $sql = "SELECT * FROM `orderlist` ORDER BY `orderlist`.`orderID` DESC";
 	            $result = $conn->query ( $sql );
 				
                 if ($result->num_rows > 0) {
@@ -98,15 +97,15 @@
 							</tr>
 							<tr>
 								<td>出貨日期</td>
-								<td><?php echo $row["shipoutdate"]?></td>
+								<td><?php echo $row["shipoutDate"]?></td>
 							</tr>
 							<tr>
 								<td>母材編號</td>
-								<td><?php echo $row["parentmetalid"]?></td>
+								<td><?php echo $row["parentmetalID"]?></td>
 							</tr>
 							<tr>
 								<td>製造流程</td>
-								<td><?php echo $row["manufacflow"]?></td>
+								<td><?php echo $row["manufacFlow"]?></td>
 							</tr>
 							<tr>
 								<td>數量</td>
@@ -159,7 +158,7 @@
                 }
                 $conn->close ();
             ?>
-	<button type="button" onclick="location.href='orderAddF.html'" class="btn btn-primary">返回</button>
+	<button type="button" onclick="location.href='orderAddF.php'" class="btn btn-primary">返回</button>
 	<br><br><br>
 	</div>
   </body>

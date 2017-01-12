@@ -48,7 +48,7 @@
 			操作員<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="operater.php">輸入操作員資訊</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="operaterF.php">輸入操作員資訊</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="searchoperater.php">查詢操作員資訊</a></li>
 			</ul>
 		</li>
@@ -71,64 +71,50 @@
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
-	<!--搜尋-->
 	<!--資料庫連線-->
 	<?php
+		error_reporting(0);
 		$severname = "127.0.0.1";
 		$username = "root";
 		$password = "";
 		$dbname = "sa06";
 		$conn = new mysqli ( $severname, $username, $password, $dbname );
 		mysqli_set_charset ( $conn, "utf8" );
-		$sql = "SELECT * FROM `process`";
+	?>
+	<!--搜尋Form-->
+	<form class="form-horizontal" role="form"  method="post" action="">
+		<div class="form-group">
+			<div class="col-sm-4 col-sm-offset-4">
+				<input type="text" class="form-control" name="processsh" placeholder="請輸入訂單編號" >
+			</div>
+		</div>
+		<button type="submit" class="btn btn-default">搜尋</button>
+	</form>
+	<br>
+	<!--搜尋結果Table-->
+	<?php
+		if ( $_POST["processsh"] != null ) { 
+			$new_processsh = $_POST["processsh"];
+			$sql = "SELECT * FROM `process` WHERE `processID` like '$new_processsh'"; 
+		} else {
+			$sql = "SELECT * FROM `process`";
+		}
 		$result = $conn->query ( $sql );
 		if ($result->num_rows > 0) {
-		echo "<table id='searchTextResults' class='table table-striped table-bordered'> ";
+			echo "<table class='table table-striped table-bordered'><tr><td>筆數</td>
+			<td>訂單進度編號</td><td>訂單編號</td><td>操作員編號</td><td>製造流程</td><td>母材數量</td><td>現在位置</td><td>狀態</td><td>更新時間</td>";
+		 // output data of each row
+		while($row = $result->fetch_assoc()) {
+			echo "<tr><td>". $row ["number"] . "</td><td>". $row ["processID"] . "</td><td>". $row ["orderID"] ."</td><td>". $row ["operatorID"] ."</td>
+					<td>". $row ["manufacFlow"] ."</td><td>". $row ["parentmetalqty"] ."</td><td>". $row ["positionNow"] ."</td>
+					<td>". $row ["SE"] ."</td><td>". $row ["time"] ."</td></tr>";
+		}
+			 echo "</table>";
+		} else {
+			 echo "<table class='table table-striped table-bordered'><tr><td>筆數</td>
+			<td>訂單進度編號</td><td>訂單編號</td><td>操作員編號</td><td>製造流程</td><td>母材數量</td><td>現在位置</td><td>狀態</td><td>更新時間</td></table>";
 		}
 	?>
-		
-	<br><br><br>
-			
-	<!--Table-->
-	<div ng-init="friends = [ {processID:'', orderID:'', operatorID:'', manufacFlow:'', parentmetalqty:'', positionNow:''}
-	<?php
-								while ( $row = $result->fetch_assoc () ) {
-								echo ",{processID:'" . $row ["processID"] . "' ,orderID:'" . $row ["orderID"] . "' ,operatorID:'" . $row ["operatorID"] . "' 
-								,manufacFlow:'" . $row ["manufacFlow"] . "' ,parentmetalqty:'" . $row ["parentmetalqty"] . "' ,positionNow:'" . $row ["positionNow"] . "' }";
-								};
-								?>]">
-							</div><br>
-							<label>請輸入關鍵字 </label><br><br><input ng-model="searchText"><br><br>
-							<table id="searchTextResults">
-								<tr>
-								<th>訂單進度編號</th>
-								<th>訂單編號</th>
-								<th>製造流程</th>
-								<th>站名</th>
-								<th>現在位置</th>
-								<th>操作員編號</th>
-								</tr>
-								<tr ng-repeat="friend in friends | filter:searchText">
-								<td>{{friend.processID}} &nbsp&nbsp&nbsp&nbsp</td>
-								<td>{{friend.orderID}} &nbsp&nbsp&nbsp&nbsp</td>
-								<td>{{friend.operatorID}} &nbsp&nbsp&nbsp&nbsp</td>
-								<td>{{friend.manufacFlow}} &nbsp&nbsp&nbsp&nbsp</td>
-								<td>{{friend.parentmetalqty}} &nbsp&nbsp&nbsp&nbsp</td>
-								<td>{{friend.positionNow}} &nbsp&nbsp&nbsp&nbsp</td>
-								</tr>
-							</table>
-	
-	<table class="table table-striped table-bordered">
-		<tr>
-			<td>訂單進度編號</td>
-			<td>訂單編號</td>
-			<td>製造流程</td>
-			<td>站名</td>
-			<td>現在位置</td>
-			<td>操作員編號</td>
-		</tr>
-	</table>
-	
 	</div>
   </body>
 </html>

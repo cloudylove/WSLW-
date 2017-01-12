@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
-    <title>修改訂單-華新麗華資料收集平台</title>
+    <title>輸入操作員-華新麗華資料收集平台</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
@@ -71,42 +71,23 @@
 	<br><br><br>
 	<!--頁面提示小標籤-->
 	<!--Form-->
-	<form class="form-horizontal" role="form" method="post" action="orderEdit.php">
-		<!--流水號再想想會怎麼選取 下拉式選單.手動輸入.還是怎樣-->
+	<form class="form-horizontal" role="form" method="post" action="operaterAdd.php">
 		<div class="form-group">
-			<label for="orderid" class="col-sm-3 control-label">訂單編號</label>
+			<label for="parentmetalid" class="col-sm-3 control-label">操作員姓名</label>
 			<div class="col-sm-6">
-				<input type="text" class="form-control" name="orderid" placeholder="輸入流水號">
+				<input type="text" class="form-control" name="operatername" placeholder="輸入操作員姓名">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="shipoutdate" class="col-sm-3 control-label">出貨日期</label>
+			<label for="parentmetalid" class="col-sm-3 control-label">操作員班表</label>
 			<div class="col-sm-6">
-				<input type="date" class="form-control" name="shipoutdate" placeholder="輸入出貨日期">
+				<input type="text" class="form-control" name="operatertime" placeholder="輸入操作員班表">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="parentmetalid" class="col-md-3 control-label">母材編號</label>
+			<label for="parentmetalid" class="col-md-3 control-label">工作位置</label>
 			<div class="col-md-6">
-				<input type="text" class="form-control" name="parentmetalid" placeholder="輸入母材編號">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="manufacflow" class="col-md-3 control-label">製造流程</label>
-			<div class="col-md-6">
-				<input type="text" class="form-control" name="manufacflow" placeholder="輸入製造流程">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="parentmetalqty" class="col-md-3 control-label">數量</label>
-			<div class="col-md-6">
-				<input type="text" class="form-control" name="parentmetalqty" placeholder="輸入數量">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="parentmetalwgt" class="col-md-3 control-label">重量</label>
-			<div class="col-md-6">
-				<input type="text" class="form-control" name="parentmetalwgt" placeholder="輸入重量">
+				<input type="text" class="form-control" name="operaterposition" placeholder="輸入工作位置">
 			</div>
 		</div>
 		<button type="submit" class="btn btn-default">確定</button>

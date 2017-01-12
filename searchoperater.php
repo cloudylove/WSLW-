@@ -47,7 +47,7 @@
 			操作員<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="operater.php">輸入操作員資訊</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="operaterF.php">輸入操作員資訊</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="searchoperater.php">查詢操作員資訊</a></li>
 			</ul>
 		</li>
@@ -70,59 +70,79 @@
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
+	<!--資料庫連線-->
+	<?php
+		error_reporting(0);
+		$severname = "127.0.0.1";
+		$username = "root";
+		$password = "";
+		$dbname = "sa06";
+		$conn = new mysqli ( $severname, $username, $password, $dbname );
+		mysqli_set_charset ( $conn, "utf8" );
+	?>
 	<!--Form-->
-	<form class="form-horizontal" role="search">
-		<!--SQL給流水號>
+	<form class="form-horizontal" role="search"  method="post" action="">
 		<div class="form-group">
-			<label for="orderid" class="col-sm-3 control-label">訂單編號</label>
-			<div class="col-sm-6">
-				<input type="text" class="form-control" id="orderid" placeholder="SQL給流水號">
-			</div>
-		</div>-->
-		
-		<div class="form-group">
-			<label for="parentmetalid" class="col-sm-3 control-label">查詢方式</label>
-			<div class="col-sm-6">
-			<select class="form-control">
-				<option></option>
-				<option value="operaterid">操作員編號</option>
-				<option value="operatername">操作員姓名</option>
-				<option value="operaterworkplace">工作位置</option>
+			<div class="col-sm-4 col-sm-offset-4">
+			<select class="form-control" name="operater">
+				<option>請選擇查詢方式</option>
+				<option value="1">操作員編號</option>
+				<option value="2">操作員姓名</option>
+				<option value="3">工作位置</option>
 			</select>
 			</div>
 		</div>
-			
-		
-		
-		
 		<div class="form-group">
-			<label for="parentmetalid" class="col-sm-3 control-label">輸入</label>
-			<div class="col-sm-6">
-				<input type="text" class="form-control" id="searchoperater" placeholder="請輸入">
+			<div class="col-sm-4 col-sm-offset-4">
+				<input type="text" class="form-control" name="operatersh" placeholder="請輸入關鍵字">
 			</div>
 		</div>
-		
 		<br>
-		
 		<button type="submit" class="btn btn-default">查詢</button>
 		<br>
 		<br>
 		<br>
 		
-		<table class="table table-striped table-bordered">
-		<tr>
-			<td>操作員編號</td>
-			<td>操作員姓名</td>
-			<td>操作員班表</td>
-			<td>工作位置</td>				
-		</tr>
-		<tr>
-			<td>123</td>
-			<td></td>
-			<td></td>
-			<td></td>			
-		</tr>
-	</table>
+		<?php
+		$new_operatersh = $_POST['operatersh'];
+		if ( $_POST["operater"] == 1 ) { 
+			$sql = "SELECT * FROM `operater` WHERE `operaterID` LIKE $new_operatersh"; 
+			$result = $conn->query ( $sql );
+			if ($result->num_rows > 0) {
+				echo "<table class='table table-striped table-bordered'><tr><td>操作員編號</td>
+					<td>操作員姓名</td><td>操作員班表</td><td>工作位置</td>";
+				while($row = $result->fetch_assoc()) {
+					echo "<tr><td>". $row ["operaterID"] . "</td><td>". $row ["operaterName"] . "</td><td>". $row ["operaterTime"] ."</td>
+					<td>". $row ["operaterPosition"] ."</td></tr>";
+				}
+				echo "</table>";
+			}
+		} if ( $_POST["operater"] == 2 ) { 
+			$sql = "SELECT * FROM `operater` WHERE `operaterName` LIKE BINARY '$new_operatersh'"; 
+			$result = $conn->query ( $sql );
+			if ($result->num_rows > 0) {
+				echo "<table class='table table-striped table-bordered'><tr><td>操作員編號</td>
+					<td>操作員姓名</td><td>操作員班表</td><td>工作位置</td>";
+				while($row = $result->fetch_assoc()) {
+					echo "<tr><td>". $row ["operaterID"] . "</td><td>". $row ["operaterName"] . "</td><td>". $row ["operaterTime"] ."</td>
+					<td>". $row ["operaterPosition"] ."</td></tr>";
+				}
+				echo "</table>";
+			} 
+		} if ( $_POST["operater"] == 3 ) { 
+			$sql = "SELECT * FROM `operater` WHERE `operaterPosition` LIKE '$new_operatersh'"; 
+			$result = $conn->query ( $sql );
+			if ($result->num_rows > 0) {
+				echo "<table class='table table-striped table-bordered'><tr><td>操作員編號</td>
+					<td>操作員姓名</td><td>操作員班表</td><td>工作位置</td>";
+				while($row = $result->fetch_assoc()) {
+					echo "<tr><td>". $row ["operaterID"] . "</td><td>". $row ["operaterName"] . "</td><td>". $row ["operaterTime"] ."</td>
+					<td>". $row ["operaterPosition"] ."</td></tr>";
+				}
+				echo "</table>";
+			}
+		}
+	?>
 	</form>
 	</div>
   </body>

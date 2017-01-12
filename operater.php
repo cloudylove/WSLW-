@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>輸入操作員-華新麗華資料收集平台</title>
+    <title>訂單顯示-華新麗華資料收集平台</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
@@ -9,7 +9,6 @@
 	<script src="js/bootstrap.min.js"></script>
   </head>
   <body>
-	<!--登出鍵-->
 	<?php
 	session_start();
 	if (isset ( $_SESSION ['username'] )!=null) {
@@ -22,7 +21,7 @@
 	?>
 	
 	<div class="container col-md-8 col-md-offset-2 navbar-collapse-center">
-		<a href="index2.php"><img src="img/waisln.jpg" alt="華新麗華資料收集平台" class="img-responsive center-block"></a>
+		<a href="index2.html"><img src="img/waisln.jpg" alt="華新麗華資料收集平台" class="img-responsive center-block"></a>
 	<!--nav-->	
 	<ul class="nav nav-pills navbar-center">
 		<li role="presentation" class="dropdown">
@@ -47,7 +46,7 @@
 			操作員<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="operater.php">輸入操作員資訊</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="operaterF.php">輸入操作員資訊</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="searchoperater.php">查詢操作員資訊</a></li>
 			</ul>
 		</li>
@@ -70,37 +69,72 @@
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
-	<!--Form-->
-	<form class="form-horizontal" role="form">
-		<!--SQL給流水號>
-		<div class="form-group">
-			<label for="orderid" class="col-sm-3 control-label">訂單編號</label>
-			<div class="col-sm-6">
-				<input type="text" class="form-control" id="orderid" placeholder="SQL給流水號">
-			</div>
-		</div>-->
-		
-		<div class="form-group">
-			<label for="parentmetalid" class="col-sm-3 control-label">操作員姓名</label>
-			<div class="col-sm-6">
-				<input type="text" class="form-control" id="operatername" placeholder="輸入操作員姓名">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="parentmetalid" class="col-sm-3 control-label">操作員班表</label>
-			<div class="col-sm-6">
-				<input type="text" class="form-control" id="operatertime" placeholder="輸入操作員班表">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="parentmetalid" class="col-md-3 control-label">工作位置</label>
-			<div class="col-md-6">
-				<input type="text" class="form-control" id="operaterposition" placeholder="輸入工作位置">
-			</div>
-		</div>
-		
-		<button type="submit" class="btn btn-default">確定</button>
-	</form>
+	<!--Table-->
+	<?php 
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "sa06";
+                $conn = new mysqli ( $servername, $username, $password, $dbname );
+                mysqli_set_charset ( $conn, "utf8" );
+                
+                $sql = "SELECT * FROM `operater` ORDER BY `operater`.`operaterID` DESC";
+	            $result = $conn->query ( $sql );
+				
+                if ($result->num_rows > 0) {
+					if(isset($_SESSION['username'])){
+						while ( $row = $result->fetch_assoc () ) {
+							?>
+							<table class="table table-striped table-bordered">
+							<tr>
+								<td>操作員編號</td>
+								<td><?php echo $row["operaterID"]?></td>
+							</tr>
+							<tr>
+								<td>操作員姓名</td>
+								<td><?php echo $row["operaterName"]?></td>
+							</tr>
+							<tr>
+								<td>操作員班表</td>
+								<td><?php echo $row["operaterTime"]?></td>
+							</tr>
+							<tr>
+								<td>工作位置</td>
+								<td><?php echo $row["operaterPosition"]?></td>
+							</tr>							
+							</table><?php
+						}
+					}
+					else {
+						while ( $row = $result->fetch_assoc () ) {
+							?>
+							<table class="table table-striped table-bordered">
+							<tr>
+								<td>操作員編號</td>
+								<td><?php echo $row["operaterID"]?></td>
+							</tr>
+							<tr>
+								<td>操作員姓名</td>
+								<td><?php echo $row["operaterName"]?></td>
+							</tr>
+							<tr>
+								<td>操作員班表</td>
+								<td><?php echo $row["operaterTime"]?></td>
+							</tr>
+							<tr>
+								<td>工作位置</td>
+								<td><?php echo $row["operaterPosition"]?></td>
+							</tr>							
+							</table><?php
+						}
+					}
+                } else {
+                    echo "0 results";
+                }
+                $conn->close ();
+            ?>
+	<button type="button" onclick="location.href='operaterF.php'" class="btn btn-primary">返回</button>
+	<br><br><br>
 	</div>
   </body>
 </html>

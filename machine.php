@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>查詢操作員-華新麗華資料收集平台</title>
+    <title>查詢機台參數-華新麗華資料收集平台</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
@@ -47,7 +47,7 @@
 			操作員<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="operater.php">輸入操作員資訊</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="operaterF.php">輸入操作員資訊</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="searchoperater.php">查詢操作員資訊</a></li>
 			</ul>
 		</li>
@@ -56,7 +56,7 @@
 			機台<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="machine.php">查詢機台資料</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="machine.php">查詢機台參數</a></li>
 			</ul>
 		</li>
 		<li role="presentation" class="dropdown">
@@ -70,49 +70,91 @@
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
-	<!--Form-->
-	<form class="form-horizontal" role="search">
-
-		
+	<!--資料庫連線-->
+	<?php
+		error_reporting(0);
+		$severname = "127.0.0.1";
+		$username = "root";
+		$password = "";
+		$dbname = "sa06";
+		$conn = new mysqli ( $severname, $username, $password, $dbname );
+		mysqli_set_charset ( $conn, "utf8" );
+		$sql = "SELECT * FROM `machine` ORDER BY `number` DESC";
+		$result = $conn->query ( $sql );
+		if ($result->num_rows > 0) {
+			echo "<table class='table table-striped table-bordered'><tr><td>筆數</td><td>溫度</td><td>濕度</td>";
+			while($row = $result->fetch_assoc()) {
+				echo "<tr><td>". $row ["number"] ."</td><td>". $row ["temp"] ."</td><td>". $row ["humidity"] ."</td></tr>";
+			}
+			echo "</table>";
+			}
+	?>
+	<!--搜尋Form-->
+	<!--
+	<form class="form-horizontal" role="search"  method="post" action=""　>
 		<div class="form-group">
-			<label for="parentmetalid" class="col-sm-4 control-label">查詢方式</label>
-			<div class="col-sm-4">
-			<select class="form-control">
-				<option>請選擇</option>
-				<option value="machineid">機台編號</option>
-				<option value="power">電源開關</option>
-				<option value="machinestatus">機台狀態</option>
-				<option value="machineparameter">機台參數</option>
+			<div class="col-sm-4 col-sm-offset-4">
+			<select class="form-control" name="machine">
+				<option>請選擇查詢方式</option>
+				<option value="1">機台編號</option>
+				<option value="2">電源開關</option>
+				<option value="3">機台狀態</option>
 			</select>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="parentmetalid" class="col-sm-4 control-label">輸入</label>
-			<div class="col-sm-4">
-				<input type="text" class="form-control" id="machinesearch" placeholder="請輸入關鍵字">
+			<div class="col-sm-4 col-sm-offset-4">
+				<input type="text" class="form-control" name="machinesh" placeholder="請輸入關鍵字">
 			</div>
 		</div>
 		<br>
 		<button type="submit" class="btn btn-default">查詢</button>
-		<br>
-		<br>
-		<br>
-		<!--Table-->
-		<table class="table table-striped table-bordered">
-			<tr>
-				<td>機台編號</td>
-				<td>電源開關</td>
-				<td>機台狀態</td>
-				<td>機台參數</td>				
-			</tr>
-			<tr>
-				<td>123</td>
-				<td></td>
-				<td></td>
-				<td></td>			
-			</tr>
-		</table>
 	</form>
+	<br>
+	<br>
+	<br>
+	-->
+	<!--搜尋結果Table-->
+	<?php
+		/*$new_machinesh = $_POST['machinesh'];
+		if ( $_POST["machine"] == 1 ) { 
+			$sql = "SELECT * FROM `machinedata` WHERE `machineID` LIKE $new_machinesh"; 
+			$result = $conn->query ( $sql );
+			if ($result->num_rows > 0) {
+				echo "<table class='table table-striped table-bordered'><tr><td>機台編號</td>
+					<td>電源開關</td><td>機台狀態</td><td>溫度</td><td>濕度</td>";
+				while($row = $result->fetch_assoc()) {
+					echo "<tr><td>". $row ["machineID"] . "</td><td>". $row ["power"] . "</td><td>". $row ["machineStatus"] ."</td>
+					<td>". $row ["temp"] ."</td><td>". $row ["humidity"] ."</td></tr>";
+				}
+				echo "</table>";
+			}
+		} if ( $_POST["machine"] == 2 ) { 
+			$sql = "SELECT * FROM `machinedata` WHERE `machineStatus` LIKE BINARY %$new_machinesh%"; 
+			$result = $conn->query ( $sql );
+			if ($result->num_rows > 0) {
+				echo "<table class='table table-striped table-bordered'><tr><td>機台編號</td>
+					<td>電源開關</td><td>機台狀態</td><td>溫度</td><td>濕度</td>";
+				while($row = $result->fetch_assoc()) {
+					echo "<tr><td>". $row ["machineID"] . "</td><td>". $row ["power"] . "</td><td>". $row ["machineStatus"] ."</td>
+					<td>". $row ["temp"] ."</td><td>". $row ["humidity"] ."</td></tr>";
+				}
+				echo "</table>";
+			}
+		} if ( $_POST["machine"] == 3 ) { 
+			$sql = "SELECT * FROM `machinedata` WHERE `power` LIKE $new_machinesh"; 
+			$result = $conn->query ( $sql );
+			if ($result->num_rows > 0) {
+				echo "<table class='table table-striped table-bordered'><tr><td>機台編號</td>
+					<td>電源開關</td><td>機台狀態</td><td>溫度</td><td>濕度</td>";
+				while($row = $result->fetch_assoc()) {
+					echo "<tr><td>". $row ["machineID"] . "</td><td>". $row ["power"] . "</td><td>". $row ["machineStatus"] ."</td>
+					<td>". $row ["temp"] ."</td><td>". $row ["humidity"] ."</td></tr>";
+				}
+				echo "</table>";
+			}
+		}*/
+	?>
 	</div>
   </body>
 </html>

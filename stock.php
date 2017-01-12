@@ -47,7 +47,7 @@
 			操作員<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="operater.php">輸入操作員資訊</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="operaterF.php">輸入操作員資訊</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="searchoperater.php">查詢操作員資訊</a></li>
 			</ul>
 		</li>
@@ -70,40 +70,52 @@
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
+	<!--資料庫連線-->
+	<?php
+		error_reporting(0);
+		$severname = "127.0.0.1";
+		$username = "root";
+		$password = "";
+		$dbname = "sa06";
+		$conn = new mysqli ( $severname, $username, $password, $dbname );
+		mysqli_set_charset ( $conn, "utf8" );
+	?>
 	<!--搜尋-->
-	<form class="navbar-form navbar-center" role="search">
+	<form class="navbar-form navbar-center" role="search"  method="post" action="">
 		<div class="form-group">
-			<select class="form-control">
-				<option>請選擇</option>
-				<option>備料倉</option>
-				<option>成品倉</option>
+			<select class="form-control" name="stock" onchange="this.form.submit()">
+				<option>請選擇倉儲</option>
+				<option value="1" >備料倉</option>
+				<option value="2" >成品倉</option>
 			</select>
 		</div>
-		<button type="submit" class="btn btn-default">搜尋</button>
 	</form>
 	<br><br><br>
-	<!--備料倉Table-->
-	<table class="table table-striped table-bordered">
-		<tr>
-			<td>備料倉儲位編號</td>
-			<td>母材編號</td>
-		</tr>
-		<tr>
-			<td>123</td>
-			<td></td>
-		</tr>
-	</table>
-	<!--成品倉Table-->
-	<table class="table table-striped table-bordered">
-		<tr>
-			<td>成品倉儲位編號</td>
-			<td>訂單進度編號</td>
-		</tr>
-		<tr>
-			<td>123</td>
-			<td></td>
-		</tr>
-	</table>
+	<!--Table-->
+	<?php
+		if ( $_POST["stock"] == 1 ) { 
+			$sql = "SELECT * FROM `material`"; 
+			$result = $conn->query ( $sql );
+			if ($result->num_rows > 0) {
+				echo "<table class='table table-striped table-bordered'><tr>
+					<td>備料倉儲位編號</td><td>母材編號</td>";
+				while($row = $result->fetch_assoc()) {
+				echo "<tr><td>". $row ["materialID"] . "</td><td>". $row ["parentmetalID"] . "</td></tr>";
+				}
+				echo "</table>";
+			}
+		} if ( $_POST["stock"] == 2 ) { 
+			$sql = "SELECT * FROM `finished`";
+			$result = $conn->query ( $sql );
+			if ($result->num_rows > 0) {
+				echo "<table class='table table-striped table-bordered'><tr>
+					<td>成品倉儲位編號</td><td>訂單進度編號</td>";
+				while($row = $result->fetch_assoc()) {
+				echo "<tr><td>". $row ["finishedID"] . "</td><td>". $row ["processID"] . "</td></tr>";
+				}echo "</table>";
+			}
+		}
+	?>
 	</div>
   </body>
 </html>

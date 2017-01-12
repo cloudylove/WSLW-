@@ -47,7 +47,7 @@
 			操作員<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="operater.php">輸入操作員資訊</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="operaterF.php">輸入操作員資訊</a></li>
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="searchoperater.php">查詢操作員資訊</a></li>
 			</ul>
 		</li>
@@ -72,13 +72,6 @@
 	<!--頁面提示小標籤-->
 	<!--Form-->
 	<form class="form-horizontal" role="form"  method="post" action="orderAdd.php">
-		<!--SQL給流水號>
-		<div class="form-group">
-			<label for="orderid" class="col-sm-3 control-label">訂單編號</label>
-			<div class="col-sm-6">
-				<input type="text" class="form-control" id="orderid" placeholder="SQL給流水號">
-			</div>
-		</div>-->
 		<div class="form-group">
 			<label for="orderdate" class="col-sm-3 control-label">訂貨日期</label>
 			<div class="col-sm-6">

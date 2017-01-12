@@ -23,7 +23,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$sql="INSERT INTO `orderlist`
 	(`orderID`, `orderDate`, `shipoutDate`, `parentmetalID`, `manufacFlow`, `parentmetalqty`, `parentmetalwgt`, `editTime`, `editContent`) VALUES 
 	(NULL,'$new_orderdate','$new_shipoutdate','$new_parentmetalid','$new_manufacflow','$new_parentmetalqty','$new_parentmetalwgt',CURRENT_TIMESTAMP,'NEW');";
-	
     
 	if ($conn->query($sql) === TRUE) {
         echo "<script>";
@@ -34,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         echo "<script>";
         echo "alert(\"新增失敗!\");";
         echo "</script>";
-		/*echo "Error: " . $sql . "<br>" . $conn->error;*/
+		echo "Error: " . $sql . "<br>" . $conn->error;
         echo '<meta http-equiv=REFRESH CONTENT=1;url=order.php>';
     }
 
