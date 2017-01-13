@@ -31,7 +31,7 @@
 			</a>
 			<ul class="dropdown-menu" role="menu">
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="orderAddF.php">新增訂單</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="orderEditF.php">修改訂單</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="order.php">顯示訂單</a></li>
 			</ul>
 		</li>
 		<li role="presentation" class="dropdown">
@@ -65,6 +65,14 @@
 			</a>
 			<ul class="dropdown-menu" role="menu">
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="stock.php">庫存查詢</a></li>
+			</ul>
+		</li>
+		<li role="presentation" class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+			問題<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu" role="menu">
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="feedback.php">問題回報</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -115,6 +123,24 @@
 								<td>重量</td>
 								<td><?php echo $row["parentmetalwgt"]?></td>
 							</tr>
+							<tr>
+								<td>編輯時間</td>
+								<td><?php echo $row["editTime"]?></td>
+							</tr>
+							<tr>
+								<td>
+								<form class="form-horizontal" method="post" action="processAdd.php">
+											<input type="hidden" name="button" value="<?php echo $row["orderID"]?>">
+									<button type="submit" class="btn btn-info">匯入訂單進度</button>
+								</form>
+								</td>
+								<td>
+								<form class="form-horizontal" method="post" action="orderEditF.php">
+											<input type="hidden" name="button2" value="<?php echo $row["orderID"]?>">
+									<button type="submit" class="btn btn-info">修改訂單資料</button>
+								</form>
+								</td>
+							</tr>
 							</table><?php
 						}
 					}
@@ -149,6 +175,24 @@
 							<tr>
 								<td>重量</td>
 								<td><?php echo $row["parentmetalwgt"]?></td>
+							</tr>
+							<tr>
+								<td>編輯時間</td>
+								<td><?php echo $row["editTime"]?></td>
+							</tr>
+							<tr>
+								<td>
+								<form class="form-horizontal" method="post" action="processAdd.php">
+											<input type="hidden" name="button" value="<?php echo $row["orderID"]?>">
+									<button type="submit" class="btn btn-info">匯入訂單進度</button>
+								</form>
+								</td>
+								<td>
+								<form class="form-horizontal" method="post" action="orderEditF.php">
+											<input type="hidden" name="button2" value="<?php echo $row["orderID"]?>">
+									<button type="submit" class="btn btn-info">修改訂單資料</button>
+								</form>
+								</td>
 							</tr>
 							</table><?php
 						}

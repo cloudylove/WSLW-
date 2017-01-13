@@ -25,15 +25,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	
     
 	if ($conn->query($sql) === TRUE) {
-        /*echo "<script>";
-        echo alert(\"新增成功\");";
-        echo "</script>";*/
+        echo "<script>";
+        echo "alert(\"修改成功\");";
+        echo "</script>";
         echo '<meta http-equiv=REFRESH CONTENT=1;url=order.php>';
     } else {
-        /*echo "<script>";
-        echo "alert(\"新增失敗!\");";
-        echo "</script>";*/
-		echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "<script>";
+        echo "alert(\"修改失敗!\");";
+        echo "</script>";
+		//echo "Error: " . $sql . "<br>" . $conn->error;
         echo '<meta http-equiv=REFRESH CONTENT=1;url=order.php>';
     }
 

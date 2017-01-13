@@ -31,7 +31,7 @@
 			</a>
 			<ul class="dropdown-menu" role="menu">
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="orderAddF.php">新增訂單</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="orderEditF.php">修改訂單</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="order.php">顯示訂單</a></li>
 			</ul>
 		</li>
 		<li role="presentation" class="dropdown">
@@ -67,16 +67,23 @@
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="stock.php">庫存查詢</a></li>
 			</ul>
 		</li>
+		<li role="presentation" class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+			問題<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu" role="menu">
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="feedback.php">問題回報</a></li>
+			</ul>
+		</li>
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
 	<!--Form-->
 	<form class="form-horizontal" role="form" method="post" action="orderEdit.php">
-		<!--流水號再想想會怎麼選取 下拉式選單.手動輸入.還是怎樣-->
 		<div class="form-group">
 			<label for="orderid" class="col-sm-3 control-label">訂單編號</label>
 			<div class="col-sm-6">
-				<input type="text" class="form-control" name="orderid" placeholder="輸入流水號">
+				<input type="text" class="form-control" name="orderid" placeholder="" value="<?php echo $_POST["button2"]?>">
 			</div>
 		</div>
 		<div class="form-group">

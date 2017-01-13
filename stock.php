@@ -31,7 +31,7 @@
 			</a>
 			<ul class="dropdown-menu" role="menu">
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="orderAddF.php">新增訂單</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="orderEditF.php">修改訂單</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="order.php">顯示訂單</a></li>
 			</ul>
 		</li>
 		<li role="presentation" class="dropdown">
@@ -67,6 +67,14 @@
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="stock.php">庫存查詢</a></li>
 			</ul>
 		</li>
+		<li role="presentation" class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+			問題<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu" role="menu">
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="feedback.php">問題回報</a></li>
+			</ul>
+		</li>
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
@@ -98,9 +106,9 @@
 			$result = $conn->query ( $sql );
 			if ($result->num_rows > 0) {
 				echo "<table class='table table-striped table-bordered'><tr>
-					<td>備料倉儲位編號</td><td>母材編號</td>";
+					<td>備料倉儲位編號</td><td>母材編號</td><td>更新時間</td>";
 				while($row = $result->fetch_assoc()) {
-				echo "<tr><td>". $row ["materialID"] . "</td><td>". $row ["parentmetalID"] . "</td></tr>";
+				echo "<tr><td>". $row ["materialID"] . "</td><td>". $row ["parentmetalID"] . "</td><td>". $row ["editTime"] . "</td></tr>";
 				}
 				echo "</table>";
 			}
@@ -109,9 +117,9 @@
 			$result = $conn->query ( $sql );
 			if ($result->num_rows > 0) {
 				echo "<table class='table table-striped table-bordered'><tr>
-					<td>成品倉儲位編號</td><td>訂單進度編號</td>";
+					<td>成品倉儲位編號</td><td>訂單進度編號</td><td>更新時間</td>";
 				while($row = $result->fetch_assoc()) {
-				echo "<tr><td>". $row ["finishedID"] . "</td><td>". $row ["processID"] . "</td></tr>";
+				echo "<tr><td>". $row ["finishedID"] . "</td><td>". $row ["processID"] . "</td><td>". $row ["editTime"] . "</td></tr>";
 				}echo "</table>";
 			}
 		}

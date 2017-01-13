@@ -1,12 +1,13 @@
 ﻿<!DOCTYPE html>
 <html>
   <head>
-    <title>新增訂單-華新麗華資料收集平台</title>
+    <title>問題回報-華新麗華資料收集平台</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   </head>
   <body>
 	<!--登出鍵-->
@@ -78,46 +79,49 @@
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
-	<!--Form-->
-	<form class="form-horizontal" role="form"  method="post" action="orderAdd.php">
+	<!--資料庫連線-->
+	<?php
+		error_reporting(0);
+		$severname = "127.0.0.1";
+		$username = "root";
+		$password = "";
+		$dbname = "sa06";
+		$conn = new mysqli ( $severname, $username, $password, $dbname );
+		mysqli_set_charset ( $conn, "utf8" );
+	?>
+	<!--搜尋Form-->
+	<form class="form-horizontal" role="form"  method="post" action="">
 		<div class="form-group">
-			<label for="orderdate" class="col-sm-3 control-label">訂貨日期</label>
-			<div class="col-sm-6">
-				<input type="date" class="form-control" name="orderdate" placeholder="輸入訂貨日期">
+			<div class="col-sm-4 col-sm-offset-4">
+				<input type="text" class="form-control" name="feedbacksh" placeholder="請輸入工作站名" >
 			</div>
 		</div>
-		<div class="form-group">
-			<label for="shipoutdate" class="col-sm-3 control-label">出貨日期</label>
-			<div class="col-sm-6">
-				<input type="date" class="form-control" name="shipoutdate" placeholder="輸入出貨日期">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="parentmetalid" class="col-md-3 control-label">母材編號</label>
-			<div class="col-md-6">
-				<input type="text" class="form-control" name="parentmetalid" placeholder="輸入母材編號">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="manufacflow" class="col-md-3 control-label">製造流程</label>
-			<div class="col-md-6">
-				<input type="text" class="form-control" name="manufacflow" placeholder="輸入製造流程">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="parentmetalqty" class="col-md-3 control-label">數量</label>
-			<div class="col-md-6">
-				<input type="text" class="form-control" name="parentmetalqty" placeholder="輸入數量">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="parentmetalwgt" class="col-md-3 control-label">重量</label>
-			<div class="col-md-6">
-				<input type="text" class="form-control" name="parentmetalwgt" placeholder="輸入重量">
-			</div>
-		</div>
-		<button type="submit" class="btn btn-default">確定</button>
+		<button type="submit" class="btn btn-default">搜尋</button>
 	</form>
+	<br>
+	<!--搜尋結果Table-->
+	<?php
+		if ( $_POST["feedbacksh"] != null ) { 
+			$new_feedbacksh = $_POST["feedbacksh"];
+			$sql = "SELECT * FROM `problem` WHERE `station` like '$new_feedbacksh'"; 
+		} else {
+			$sql = "SELECT * FROM `problem`";
+		}
+		$result = $conn->query ( $sql );
+		if ($result->num_rows > 0) {
+			echo "<table class='table table-striped table-bordered'><tr><td>編號</td>
+			<td>工作站</td><td>員工</td><td>問題回報</td><td>回報時間</td>";
+		 // output data of each row
+		while($row = $result->fetch_assoc()) {
+			echo "<tr><td>". $row ["number"] . "</td><td>". $row ["station"] ."</td>
+					<td>". $row ["people"] ."</td><td>". $row ["what"] ."</td><td>". $row ["time"] ."</td></tr>";
+		}
+			 echo "</table>";
+		} else {
+			 echo "<table class='table table-striped table-bordered'><tr><td>編號</td>
+			<td>工作站</td><td>員工</td><td>問題回報</td><td>回報時間</td></table>";
+		}
+	?>
 	</div>
   </body>
 </html>

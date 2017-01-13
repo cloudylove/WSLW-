@@ -32,7 +32,7 @@
 			</a>
 			<ul class="dropdown-menu" role="menu">
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="orderAddF.php">新增訂單</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="orderEditF.php">修改訂單</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="order.php">顯示訂單</a></li>
 			</ul>
 		</li>
 		<li role="presentation" class="dropdown">
@@ -68,6 +68,14 @@
 				<li role="presentation"><a role="menuitem" tabindex="-1" href="stock.php">庫存查詢</a></li>
 			</ul>
 		</li>
+		<li role="presentation" class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+			問題<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu" role="menu">
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="feedback.php">問題回報</a></li>
+			</ul>
+		</li>
 	</ul>
 	<br><br><br>
 	<!--頁面提示小標籤-->
@@ -95,24 +103,24 @@
 	<?php
 		if ( $_POST["processsh"] != null ) { 
 			$new_processsh = $_POST["processsh"];
-			$sql = "SELECT * FROM `process` WHERE `processID` like '$new_processsh'"; 
+			$sql = "SELECT * FROM `process` WHERE `orderID` like '$new_processsh'"; 
 		} else {
 			$sql = "SELECT * FROM `process`";
 		}
 		$result = $conn->query ( $sql );
 		if ($result->num_rows > 0) {
 			echo "<table class='table table-striped table-bordered'><tr><td>筆數</td>
-			<td>訂單進度編號</td><td>訂單編號</td><td>操作員編號</td><td>製造流程</td><td>母材數量</td><td>現在位置</td><td>狀態</td><td>更新時間</td>";
+			<td>訂單編號</td><td>製造流程</td><td>母材數量</td><td>現在位置</td><td>狀態</td><td>更新時間</td>";
 		 // output data of each row
 		while($row = $result->fetch_assoc()) {
-			echo "<tr><td>". $row ["number"] . "</td><td>". $row ["processID"] . "</td><td>". $row ["orderID"] ."</td><td>". $row ["operatorID"] ."</td>
+			echo "<tr><td>". $row ["number"] . "</td><td>". $row ["orderID"] ."</td>
 					<td>". $row ["manufacFlow"] ."</td><td>". $row ["parentmetalqty"] ."</td><td>". $row ["positionNow"] ."</td>
 					<td>". $row ["SE"] ."</td><td>". $row ["time"] ."</td></tr>";
 		}
 			 echo "</table>";
 		} else {
 			 echo "<table class='table table-striped table-bordered'><tr><td>筆數</td>
-			<td>訂單進度編號</td><td>訂單編號</td><td>操作員編號</td><td>製造流程</td><td>母材數量</td><td>現在位置</td><td>狀態</td><td>更新時間</td></table>";
+			<td>訂單編號</td><td>製造流程</td><td>母材數量</td><td>現在位置</td><td>狀態</td><td>更新時間</td></table>";
 		}
 	?>
 	</div>
