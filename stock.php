@@ -117,9 +117,9 @@
 			$result = $conn->query ( $sql );
 			if ($result->num_rows > 0) {
 				echo "<table class='table table-striped table-bordered'><tr>
-					<td>成品倉儲位編號</td><td>訂單進度編號</td><td>更新時間</td>";
+					<td>成品倉儲位編號</td><td>訂單編號</td><td>更新時間</td>";
 				while($row = $result->fetch_assoc()) {
-				echo "<tr><td>". $row ["finishedID"] . "</td><td>". $row ["processID"] . "</td><td>". $row ["editTime"] . "</td></tr>";
+				echo "<tr><td>". $row ["finishedID"] . "</td><td>". $row ["orderID"] . "</td><td>". $row ["editTime"] . "</td></tr>";
 				}echo "</table>";
 			}
 		}
